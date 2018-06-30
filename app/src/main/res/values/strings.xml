@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Reminder</string>
+    <string name="year_checkbox">Don\'t remember the year?</string>
 </resources>
