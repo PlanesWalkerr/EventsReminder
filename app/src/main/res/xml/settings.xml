@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preference_screen">
+    <Preference
+        android:key="@string/key_contacts_import"
+        android:title="Import from contact book"/>
+
+    <com.makhovyk.mykhailo.reminder.utils.TimePreference
+        android:key="@string/key_notification_time"
+        android:title="Set notification time"/>
+
+    <Preference
+        android:key="@string/key_export_sdcard"
+        android:title="Export data to SD Card"/>
+
+    <Preference
+        android:key="@string/key_import_sdcard"
+        android:title="Import data from SD Card"/>
+
+</PreferenceScreen>

@@ -24,9 +24,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public static final String EVENT_DATE = "date";
     public static final String EVENT_NAME = "name";
     public static final String EVENT_PERSON_NAME = "personName";
-    public static final String EVENT_PERSON_EMAIL = "email";
     public static final String EVENT_PERSON_PHONE = "phone";
-    public static final String EVENT_IS_YEAR_KNOWN = "isYearKnown";
+    public static final String EVENT_IS_YEAR_KNOWN = "isYearUnknown";
+    public static final String EVENT_TIMESTAMP = "time_stamp";
 
     public SQLiteDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -36,13 +36,13 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         final String EVENTS_CREATE_TABLE = "create table " + TABLE_EVENTS + "("
-                + EVENT_ID + " integer primary key not null,"
+                + EVENT_ID + " integer primary key autoincrement not null,"
                 + EVENT_TYPE + " text not null,"
                 + EVENT_DATE + " integer not null,"
                 + EVENT_NAME + " text,"
                 + EVENT_PERSON_NAME + " text not null,"
-                + EVENT_PERSON_EMAIL + " text,"
                 + EVENT_IS_YEAR_KNOWN + " integer not null,"
+                + EVENT_TIMESTAMP + " integer not null,"
                 + EVENT_PERSON_PHONE + " text)";
 
         sqLiteDatabase.execSQL(EVENTS_CREATE_TABLE);
@@ -50,40 +50,37 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     public void writeEvent(Event event) {
         ContentValues cv = new ContentValues();
-        cv.put(EVENT_ID, event.getId());
         cv.put(EVENT_NAME, event.getEventName());
+        cv.put(EVENT_TIMESTAMP, event.getTimestamp());
         cv.put(EVENT_TYPE, event.getType());
         cv.put(EVENT_DATE, event.getDate());
         cv.put(EVENT_PERSON_NAME, event.getPersonName());
-        cv.put(EVENT_PERSON_EMAIL, event.getEmail());
         cv.put(EVENT_PERSON_PHONE, event.getPhone());
-        cv.put(EVENT_IS_YEAR_KNOWN, (event.isYearKnown()) ? 1 : 0);
+        cv.put(EVENT_IS_YEAR_KNOWN, (event.isYearUnknown()) ? 1 : 0);
         this.getWritableDatabase().insert(TABLE_EVENTS, null, cv);
     }
 
-    public Event getEventById(int id) {
-        String sqlQuery = "select * from " + TABLE_EVENTS + " where _id=" + id + "";
+    public Event getEventByTimestamp(long timestamp) {
+        String sqlQuery = "select * from " + TABLE_EVENTS + " where " + EVENT_TIMESTAMP + "=" + timestamp;
         Cursor cursor = this.getReadableDatabase().rawQuery(sqlQuery, null);
         Event event = new Event();
         Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
         if (cursor.moveToFirst()) {
             do {
-                int idIndex = cursor.getColumnIndex(EVENT_ID);
                 int nameIndex = cursor.getColumnIndex(EVENT_NAME);
+                int timestampIndex = cursor.getColumnIndex(EVENT_TIMESTAMP);
                 int typeIndex = cursor.getColumnIndex(EVENT_TYPE);
                 int dateIndex = cursor.getColumnIndex(EVENT_DATE);
                 int personNameIndex = cursor.getColumnIndex(EVENT_PERSON_NAME);
-                int emailIndex = cursor.getColumnIndex(EVENT_PERSON_EMAIL);
                 int phoneIndex = cursor.getColumnIndex(EVENT_PERSON_PHONE);
                 int isYearKnownIndex = cursor.getColumnIndex(EVENT_IS_YEAR_KNOWN);
-                event.setId(cursor.getInt(idIndex));
                 event.setEventName(cursor.getString(nameIndex));
                 event.setDate(cursor.getLong(dateIndex));
                 event.setType(cursor.getString(typeIndex));
                 event.setPersonName(cursor.getString(personNameIndex));
-                event.setEmail(cursor.getString(emailIndex));
                 event.setPhone(cursor.getString(phoneIndex));
-                event.setYearKnown(cursor.getInt(isYearKnownIndex) == 1);
+                event.setTimestamp(cursor.getLong(timestampIndex));
+                event.setYearUnknown(cursor.getInt(isYearKnownIndex) == 1);
             } while (cursor.moveToNext());
         }
 
@@ -98,23 +95,21 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
         if (cursor.moveToFirst()) {
             do {
-                int idIndex = cursor.getColumnIndex(EVENT_ID);
+                int timestampIndex = cursor.getColumnIndex(EVENT_TIMESTAMP);
                 int nameIndex = cursor.getColumnIndex(EVENT_NAME);
                 int typeIndex = cursor.getColumnIndex(EVENT_TYPE);
                 int dateIndex = cursor.getColumnIndex(EVENT_DATE);
                 int personNameIndex = cursor.getColumnIndex(EVENT_PERSON_NAME);
-                int emailIndex = cursor.getColumnIndex(EVENT_PERSON_EMAIL);
                 int phoneIndex = cursor.getColumnIndex(EVENT_PERSON_PHONE);
                 int isYearKnownIndex = cursor.getColumnIndex(EVENT_IS_YEAR_KNOWN);
                 Event event = new Event();
-                event.setId(cursor.getInt(idIndex));
                 event.setEventName(cursor.getString(nameIndex));
                 event.setDate(cursor.getLong(dateIndex));
                 event.setType(cursor.getString(typeIndex));
                 event.setPersonName(cursor.getString(personNameIndex));
-                event.setEmail(cursor.getString(emailIndex));
                 event.setPhone(cursor.getString(phoneIndex));
-                event.setYearKnown(cursor.getInt(isYearKnownIndex) == 1);
+                event.setTimestamp(cursor.getLong(timestampIndex));
+                event.setYearUnknown(cursor.getInt(isYearKnownIndex) == 1);
                 events.add(event);
             } while (cursor.moveToNext());
         }
@@ -143,5 +138,23 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return res;
+    }
+
+    public void deleteEvent(long timestamp) {
+        this.getWritableDatabase().delete(TABLE_EVENTS,
+                EVENT_TIMESTAMP + "=?",
+                new String[]{Long.toString(timestamp)});
+    }
+
+    public void updateEvent(Event event) {
+        ContentValues cv = new ContentValues();
+        cv.put(EVENT_IS_YEAR_KNOWN, (event.isYearUnknown()) ? 1 : 0);
+        cv.put(EVENT_TYPE, event.getType());
+        cv.put(EVENT_PERSON_NAME, event.getPersonName());
+        cv.put(EVENT_NAME, event.getEventName());
+        cv.put(EVENT_PERSON_PHONE, event.getPhone());
+        cv.put(EVENT_DATE, event.getDate());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(TABLE_EVENTS, cv, EVENT_TIMESTAMP + "= ?", new String[]{Long.toString(event.getTimestamp())});
     }
 }

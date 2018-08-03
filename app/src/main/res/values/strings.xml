@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">Reminder</string>
     <string name="year_checkbox">Don\'t remember the year?</string>
+    <string name="title_activity_new_person">NewPersonActivity</string>
+    <string name="placeholder_name">Enter the name</string>
+    <string name="placeholder_phone">Phone</string>
+    <string name="placeholder_email">Email</string>
+    <string name="placeholder_date">Choose a date</string>
+    <string name="placeholder_event_name">Event name</string>
+    <string name="bt_ok">OK</string>
+    <string name="bt_cancel">Cancel</string>
+    <string name="action_show_settings">Show settings</string>
+
+
+    <string name="key_contacts_import">contacts_import</string>
+    <string name="key_notification_time">notification_time</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="channel_name">Reminder</string>
+    <string name="delete_menu">Delete</string>
+    <string name="edit_menu">Edit</string>
+    <string name="key_export_sdcard">export_sdcard</string>
+    <string name="key_import_sdcard">import_data</string>
 </resources>

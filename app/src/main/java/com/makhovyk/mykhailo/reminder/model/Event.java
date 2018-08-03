@@ -1,39 +1,33 @@
 package com.makhovyk.mykhailo.reminder.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-public class Event {
+public class Event implements Serializable, ListItem {
 
-    private int id;
     private String type;
     private long date;
     private String eventName;
     private String personName;
-    private String email;
     private String phone;
-    private boolean isYearKnown;
+    private boolean isYearUnknown;
+    private long timestamp;
 
     public Event() {
+        this.timestamp = new Date().getTime();
     }
 
-    public Event(int id, String type, long date, String eventName, String personName, String email, String phone, boolean isYearKnown) {
-        this.id = id;
+
+    public Event(String type, long date, String eventName, String personName, String phone, boolean isYearKnown) {
         this.type = type;
         this.date = date;
         this.eventName = eventName;
         this.personName = personName;
-        this.email = email;
         this.phone = phone;
-        this.isYearKnown = isYearKnown;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.isYearUnknown = isYearKnown;
+        this.timestamp = new Date().getTime();
     }
 
     public String getType() {
@@ -68,14 +62,6 @@ public class Event {
         this.personName = personName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -84,12 +70,12 @@ public class Event {
         this.phone = phone;
     }
 
-    public boolean isYearKnown() {
-        return isYearKnown;
+    public boolean isYearUnknown() {
+        return isYearUnknown;
     }
 
-    public void setYearKnown(boolean yearKnown) {
-        isYearKnown = yearKnown;
+    public void setYearUnknown(boolean yearUnknown) {
+        isYearUnknown = yearUnknown;
     }
 
     public int getYear() {
@@ -101,7 +87,7 @@ public class Event {
     public int getMonth() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);
-        return calendar.get(Calendar.MONTH);
+        return calendar.get(Calendar.MONTH) + 1;
     }
 
     public int getDay() {
@@ -110,18 +96,56 @@ public class Event {
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setTimestamp() {
+        this.timestamp = new Date().getTime();
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String formattedDate = sdf.format(date);
         return "Event{" +
-                "id=" + id +
                 ", type='" + type + '\'' +
                 ", date='" + formattedDate + '\'' +
                 ", eventName='" + eventName + '\'' +
                 ", personName='" + personName + '\'' +
-                ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", timestamp='" + timestamp + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        if (date != event.date) return false;
+        if (isYearUnknown != event.isYearUnknown) return false;
+        if (!type.equals(event.type)) return false;
+        return personName.equals(event.personName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type.hashCode();
+        result = 31 * result + (int) (date ^ (date >>> 32));
+        result = 31 * result + personName.hashCode();
+        result = 31 * result + (isYearUnknown ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public boolean isSeparator() {
+        return false;
     }
 }
