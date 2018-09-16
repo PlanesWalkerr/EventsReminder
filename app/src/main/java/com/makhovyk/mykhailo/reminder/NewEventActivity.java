@@ -8,21 +8,27 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.makhovyk.mykhailo.reminder.database.SQLiteDBHelper;
@@ -30,6 +36,7 @@ import com.makhovyk.mykhailo.reminder.model.Event;
 import com.makhovyk.mykhailo.reminder.notifications.AlarmHelper;
 import com.makhovyk.mykhailo.reminder.utils.Constants;
 import com.makhovyk.mykhailo.reminder.utils.CustomDatePickerDialog;
+import com.makhovyk.mykhailo.reminder.utils.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,11 +73,31 @@ public class NewEventActivity extends AppCompatActivity {
     Button btOk;
     @BindView(R.id.bt_contact)
     Button btContact;
+    @BindView(R.id.il_event_name)
+    TextInputLayout ilEventName;
+    @BindView(R.id.il_name)
+    TextInputLayout ilName;
+    @BindView(R.id.il_phone)
+    TextInputLayout ilPhone;
+    @BindView(R.id.il_date)
+    TextInputLayout ilDate;
+    @BindView(R.id.ll_event_name)
+    LinearLayout llEventName;
 
     final Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        Utils.setupNightMode(this);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkTheme);
+            Log.v("TAG", "Dark");
+        } else {
+            setTheme(R.style.LightTheme);
+            Log.v("TAG", "Light");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
         ButterKnife.bind(this);
@@ -106,9 +133,14 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+        etName.addTextChangedListener(new MyTextWatcher(etName));
+        etEventName.addTextChangedListener(new MyTextWatcher(etEventName));
+        etDate.addTextChangedListener(new MyTextWatcher(etDate));
+
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 CustomDatePickerDialog datePickerDialog = new CustomDatePickerDialog(NewEventActivity.this, onDateSetListener,
                         calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH), ctvHideYear.isChecked());
@@ -138,16 +170,18 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
-        btOk.setEnabled(false);
+        // btOk.setEnabled(false);
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveEvent();
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                startActivity(intent);
+                if (validate()) {
+                    saveEvent();
+                    Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-
+/*
         etName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -211,7 +245,7 @@ public class NewEventActivity extends AppCompatActivity {
                 checkFields();
             }
         });
-
+*/
     }
 
     private void updateDateField() {
@@ -224,13 +258,13 @@ public class NewEventActivity extends AppCompatActivity {
     public void spinnerItemSelected(Spinner spinner, View selectedItemView, int position) {
         switch (types[position]) {
             case Constants.TYPE_BIRTHDAY:
-                etEventName.setVisibility(View.GONE);
+                llEventName.setVisibility(View.GONE);
                 break;
             case Constants.TYPE_ANNIVERSARY:
-                etEventName.setVisibility(View.GONE);
+                llEventName.setVisibility(View.GONE);
                 break;
             case Constants.TYPE_OTHER_EVENT:
-                etEventName.setVisibility(View.VISIBLE);
+                llEventName.setVisibility(View.VISIBLE);
                 etEventName.requestFocus();
                 break;
         }
@@ -254,31 +288,32 @@ public class NewEventActivity extends AppCompatActivity {
             event.setEventName(etEventName.getText().toString());
         }
         Log.v(TAG, event.toString());
+        Log.d("hello", "new event");
         SQLiteDBHelper dbHelper = new SQLiteDBHelper(this);
         dbHelper.writeEvent(event);
-        new AlarmHelper(getApplicationContext()).setAlarm(event);
+        new AlarmHelper(getApplicationContext()).setAlarm(event, false);
 
 
     }
 
-    private void checkFields() {
-        if (spType.getSelectedItem().toString().equals(Constants.TYPE_OTHER_EVENT)) {
-            if (etName.getText().toString().trim().equals("")
-                    || etEventName.getText().toString().trim().equals("")
-                    || etDate.getText().toString().trim().equals("")) {
-                btOk.setEnabled(false);
-            } else {
-                btOk.setEnabled(true);
-            }
-        } else {
-            if (etName.getText().toString().trim().equals("")
-                    || etDate.getText().toString().trim().equals("")) {
-                btOk.setEnabled(false);
-            } else {
-                btOk.setEnabled(true);
-            }
-        }
-    }
+//    private void checkFields() {
+//        if (spType.getSelectedItem().toString().equals(Constants.TYPE_OTHER_EVENT)) {
+//            if (etName.getText().toString().trim().equals("")
+//                    || etEventName.getText().toString().trim().equals("")
+//                    || etDate.getText().toString().trim().equals("")) {
+//                btOk.setEnabled(false);
+//            } else {
+//                btOk.setEnabled(true);
+//            }
+//        } else {
+//            if (etName.getText().toString().trim().equals("")
+//                    || etDate.getText().toString().trim().equals("")) {
+//                btOk.setEnabled(false);
+//            } else {
+//                btOk.setEnabled(true);
+//            }
+//        }
+//    }
 
     private DatePicker findDatePicker(ViewGroup group) {
         if (group != null) {
@@ -340,5 +375,90 @@ public class NewEventActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private boolean validate() {
+        if (!validateEventName()) {
+            Log.d("hello", "event name validated");
+            return false;
+        }
+        if (!validateName()) {
+            Log.d("hello", " name validated");
+            return false;
+        }
+        if (!validateDate()) {
+            Log.d("hello", "date validated");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateName() {
+        if (etName.getText().toString().trim().isEmpty()) {
+            ilName.setError(getString(R.string.error_name));
+            requestFocus(etName);
+            return false;
+        } else {
+            ilName.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateEventName() {
+        if (etEventName.getText().toString().trim().isEmpty()
+                && (llEventName.getVisibility() == View.VISIBLE)) {
+            ilEventName.setError(getString(R.string.error_event_name));
+            requestFocus(etEventName);
+            return false;
+        } else {
+            ilEventName.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateDate() {
+        if (etDate.getText().toString().trim().isEmpty()) {
+            ilDate.setError(getString(R.string.error_date));
+            requestFocus(etDate);
+            return false;
+        } else {
+            ilDate.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.et_name:
+                    validateName();
+                    break;
+                case R.id.et_event_name:
+                    validateEventName();
+                    break;
+                case R.id.et_date:
+                    validateDate();
+                    break;
+            }
+        }
     }
 }

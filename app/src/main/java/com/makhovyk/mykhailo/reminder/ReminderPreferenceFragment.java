@@ -1,14 +1,17 @@
 package com.makhovyk.mykhailo.reminder;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,8 +25,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static android.content.SharedPreferences.*;
 
-public class ReminderPreferenceFragment extends PreferenceFragment {
+
+public class ReminderPreferenceFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
 
     String[] permissions = new String[]{
             Manifest.permission.INTERNET,
@@ -32,6 +37,7 @@ public class ReminderPreferenceFragment extends PreferenceFragment {
     ContactsManager contactsManager;
     SharedPreferences preferences;
     BackupHelper backupHelper;
+    SwitchPreference switchMode;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +93,45 @@ public class ReminderPreferenceFragment extends PreferenceFragment {
                 return true;
             }
         });
+
+        switchMode = (SwitchPreference) findPreference(getString(R.string.key_switch_mode));
+        switchMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                boolean isOn = (boolean) o;
+                if (isOn) {
+                    switchMode.setSummary("Enabled");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    switchMode.setSummary("Disabled");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                return true;
+            }
+        });
+        /*
+        switchMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                boolean isOn = switchMode.isChecked();
+               /* boolean isOn = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .getBoolean(getString(R.string.key_switch_mode), false);
+               /* if (isOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                //restartApp();
+                Toast.makeText(getActivity(),isOn + "", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });*/
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
 
@@ -143,4 +188,34 @@ public class ReminderPreferenceFragment extends PreferenceFragment {
         }
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        Log.v("hello", "switched");
+        if (s.equals(getString(R.string.key_switch_mode))) {
+            boolean test = sharedPreferences.getBoolean(getString(R.string.key_switch_mode), false);
+            //Do whatever you want here. This is an example.
+            if (test) {
+                switchMode.setSummary("Enabled");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                switchMode.setSummary("Disabled");
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            restartApp();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean test = preferences.getBoolean(getString(R.string.key_switch_mode), false);
+
+        if (test) {
+            switchMode.setSummary("Enabled");
+        } else {
+            switchMode.setSummary("Disabled");
+        }
+    }
 }

@@ -3,4 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="grey">#d4dbd7</color>
+    <color name="circle_color">#ebedb1</color>
+
+    <color name="cyanLight">#4fb3bf</color>
+    <color name="cyanDark">#00838f</color>
+    <color name="cyanPrimary">#005662</color>
+    <color name="cyanIconColor">#5ddef4</color>
+
+    <color name="colorBlack">#000</color>
+    <color name="colorGrey">#424242</color>
+    <color name="colorLightGrey">#dfdede</color>
+    <color name="colorLightGreen">#64FFDA</color>
+
+
 </resources>

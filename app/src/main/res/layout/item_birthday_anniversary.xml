@@ -18,27 +18,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_event_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="?attr/primaryTextColor"
-            tools:text="event name" />
-
-        <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:textColor="?attr/primaryTextColor"
+            android:textSize="20sp"
             tools:text="name" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="20sp"
+            tools:text="type" />
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:textColor="?attr/secondaryTextColor"
+            android:textSize="16sp"
             tools:text="date" />
     </LinearLayout>
 

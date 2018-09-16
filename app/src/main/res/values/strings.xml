@@ -2,15 +2,20 @@
     <string name="app_name">Reminder</string>
     <string name="year_checkbox">Don\'t remember the year?</string>
     <string name="title_activity_new_person">NewPersonActivity</string>
-    <string name="placeholder_name">Enter the name</string>
-    <string name="placeholder_phone">Phone</string>
-    <string name="placeholder_email">Email</string>
-    <string name="placeholder_date">Choose a date</string>
-    <string name="placeholder_event_name">Event name</string>
+
     <string name="bt_ok">OK</string>
     <string name="bt_cancel">Cancel</string>
     <string name="action_show_settings">Show settings</string>
+    <string name="action_delete_event">Delete event</string>
+    <string name="action_add_event">Add event</string>
 
+
+    <string name="hint_name">Enter the name</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_date">Choose a date</string>
+    <string name="hint_event_name">Event name</string>
+    <string name="hint_from_contacts">Add from contacts</string>
 
     <string name="key_contacts_import">contacts_import</string>
     <string name="key_notification_time">notification_time</string>
@@ -19,6 +24,16 @@
     <string name="channel_name">Reminder</string>
     <string name="delete_menu">Delete</string>
     <string name="edit_menu">Edit</string>
+
     <string name="key_export_sdcard">export_sdcard</string>
     <string name="key_import_sdcard">import_data</string>
+    <string name="key_switch_mode">switch_mode</string>
+
+    <string name="error_name">Please enter a name</string>
+    <string name="error_date">Please enter a name</string>
+    <string name="error_event_name">Please enter event name</string>
+    <string name="season_image">season image</string>
+
+    <string name="today">Today</string>
+
 </resources>

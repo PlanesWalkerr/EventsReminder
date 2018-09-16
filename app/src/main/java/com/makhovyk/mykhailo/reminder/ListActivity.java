@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.makhovyk.mykhailo.reminder.model.ListItem;
 import com.makhovyk.mykhailo.reminder.model.Separator;
 import com.makhovyk.mykhailo.reminder.utils.Constants;
 import com.makhovyk.mykhailo.reminder.utils.ContactsManager;
+import com.makhovyk.mykhailo.reminder.utils.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,11 +42,19 @@ public class ListActivity extends AppCompatActivity implements ContactsManager.O
 
     @BindView(R.id.event_recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Utils.setupNightMode(this);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkTheme);
+            Log.v("TAG", "Dark");
+        } else {
+            setTheme(R.style.LightTheme);
+            Log.v("TAG", "Light");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
@@ -68,20 +78,13 @@ public class ListActivity extends AppCompatActivity implements ContactsManager.O
         recyclerView.setAdapter(new ListAdapter(events, this));
         recyclerView.getAdapter().notifyDataSetChanged();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NewEventActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.settings_menu, menu);
+        menuInflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -89,11 +92,16 @@ public class ListActivity extends AppCompatActivity implements ContactsManager.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_show_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-            default:
-                return super.onOptionsItemSelected(item);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.action_add_event:
+                Intent addIntent = new Intent(getApplicationContext(), NewEventActivity.class);
+                startActivity(addIntent);
+                break;
+
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void addEvents() {
@@ -192,7 +200,7 @@ public class ListActivity extends AppCompatActivity implements ContactsManager.O
                             events.add(i, separator);
                         }
                     }
-                    Log.v(TAG, "event: " + event.toString());
+                    //Log.v(TAG, "event: " + event.toString());
                     break;
                 }
             }

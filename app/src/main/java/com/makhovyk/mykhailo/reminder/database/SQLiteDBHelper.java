@@ -64,7 +64,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         String sqlQuery = "select * from " + TABLE_EVENTS + " where " + EVENT_TIMESTAMP + "=" + timestamp;
         Cursor cursor = this.getReadableDatabase().rawQuery(sqlQuery, null);
         Event event = new Event();
-        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
+        //Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
         if (cursor.moveToFirst()) {
             do {
                 int nameIndex = cursor.getColumnIndex(EVENT_NAME);

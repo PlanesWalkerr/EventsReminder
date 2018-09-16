@@ -14,12 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.makhovyk.mykhailo.reminder.EditEventActivity;
+import com.makhovyk.mykhailo.reminder.EventDetailsActivity;
 import com.makhovyk.mykhailo.reminder.R;
 import com.makhovyk.mykhailo.reminder.database.SQLiteDBHelper;
 import com.makhovyk.mykhailo.reminder.model.Event;
 import com.makhovyk.mykhailo.reminder.model.ListItem;
 import com.makhovyk.mykhailo.reminder.model.Separator;
 import com.makhovyk.mykhailo.reminder.utils.Constants;
+import com.makhovyk.mykhailo.reminder.utils.Utils;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -42,6 +44,10 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tvName;
         @BindView(R.id.tv_date)
         TextView tvDate;
+        @BindView(R.id.tv_age)
+        TextView tvAge;
+        @BindView(R.id.tv_type)
+        TextView tvType;
 
 
         BirthdayHolder(View itemView) {
@@ -53,8 +59,15 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void bindEvent(Event event) {
             super.bindEvent(event);
             tvName.setText(event.getPersonName());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            tvDate.setText(sdf.format(event.getDate()));
+            tvDate.setText(Utils.getformattedDate(event.getDate(), event.isYearUnknown()));
+            tvType.setText(event.getType());
+            int age = Utils.getAge(event.getYear());
+            if (!event.isYearUnknown() && age >= 0) {
+                tvAge.setText(age + "");
+            } else {
+                tvAge.setText("--");
+            }
+            tvAge.setBackgroundResource(Utils.getAgeCircleDrawable(age));
         }
 
     }
@@ -67,6 +80,8 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tvDate;
         @BindView(R.id.tv_event_name)
         TextView tvEventName;
+        @BindView(R.id.tv_age)
+        TextView tvAge;
 
         OtherEventHolder(View itemView) {
             super(itemView);
@@ -77,9 +92,15 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void bindEvent(Event event) {
             super.bindEvent(event);
             tvName.setText(event.getPersonName());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            tvDate.setText(sdf.format(event.getDate()));
+            tvDate.setText(Utils.getformattedDate(event.getDate(), event.isYearUnknown()));
             tvEventName.setText(event.getEventName());
+            int age = Utils.getAge(event.getYear());
+            if (!event.isYearUnknown() && age >= 0) {
+                tvAge.setText(age + "");
+            } else {
+                tvAge.setText("--");
+            }
+            tvAge.setBackgroundResource(Utils.getAgeCircleDrawable(age));
 
         }
     }
@@ -89,12 +110,12 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.tv_month)
         TextView tvMonth;
 
-        public SeparatorHolder(View itemView) {
+        SeparatorHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindEvent(Separator separator) {
+        void bindEvent(Separator separator) {
             tvMonth.setText(separator.getMonth());
 
         }
@@ -111,7 +132,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View v;
         switch (viewType) {
             case 1:
-                v = inflater.inflate(R.layout.item_birthday, parent, false);
+                v = inflater.inflate(R.layout.item_birthday_anniversary, parent, false);
                 return new BirthdayHolder(v);
             case 3:
                 v = inflater.inflate(R.layout.item_other_event, parent, false);
@@ -120,11 +141,9 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 v = inflater.inflate(R.layout.item_separator, parent, false);
                 return new SeparatorHolder(v);
             default:
-                v = inflater.inflate(R.layout.item_birthday, parent, false);
+                v = inflater.inflate(R.layout.item_birthday_anniversary, parent, false);
                 return new BirthdayHolder(v);
         }
-
-
 
 
     }
@@ -176,6 +195,17 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
         });
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!events.get(position).isSeparator()) {
+                    Intent intent = new Intent(context, EventDetailsActivity.class);
+                    intent.putExtra(Constants.EVENT, (Event) events.get(position));
+                    context.startActivity(intent);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -209,6 +239,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Log.v(TAG, "Deleting item " + " : " + event.toString());
         events.remove(event);
 
+
         notifyDataSetChanged();
         Log.v(TAG, events.size() + "");
         Toast.makeText(context, "Deleted ", Toast.LENGTH_SHORT).show();
@@ -219,5 +250,16 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         intent.putExtra(EditEventActivity.KEY_EVENT, (Serializable) event);
         context.startActivity(intent);
 
+    }
+
+    private void removeRedundantSeparators() {
+        for (int i = 0; i < events.size() - 1; i++) {
+            if (events.get(i).isSeparator() && events.get(i + 1).isSeparator()) {
+                events.remove(i);
+            }
+        }
+        if (events.get(events.size() - 1).isSeparator()) {
+            events.remove(events.size() - 1);
+        }
     }
 }

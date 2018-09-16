@@ -1,20 +1,48 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <!-- Light application theme. -->
+    <style name="LightTheme" parent="BaseTheme">
+        <item name="colorPrimary">@color/cyanDark</item>
+        <item name="colorPrimaryDark">@color/cyanPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="primaryTextColor">#808080</item>
+        <item name="secondaryTextColor">#808080</item>
+        <item name="backgroundColor">#fcfcfc</item>
+        <item name="iconColor">@color/cyanDark</item>
+        <item name="mainColor">@color/cyanDark</item>
+        <item name="separatorColor">@color/cyanDark</item>
+        <item name="fabColor">@color/cyanLight</item>
+        <item name="menuColor">#000</item>
+        <item name="cardViewBackgroundColor">#FFF</item>
+        <item name="personIcon">@drawable/ic_person_icon_black</item>
+        <item name="android:textColorHint">#808080</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <!-- Dak application theme. -->
+    <style name="DarkTheme" parent="BaseTheme">
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#000</item>
+        <item name="colorControlActivated">@color/colorLightGreen</item>
+        <item name="colorControlNormal">#FFF</item>
+        <item name="primaryTextColor">#fff</item>
+        <item name="secondaryTextColor">@color/colorLightGrey</item>
+        <item name="backgroundColor">#212121</item>
+        <item name="separatorColor">@color/colorLightGreen</item>
+        <item name="fabColor">@color/colorLightGreen</item>
+        <item name="iconColor">@color/cyanIconColor</item>
+        <item name="menuColor">#FFF</item>
+        <item name="cardViewBackgroundColor">#424242</item>
+        <item name="personIcon">@drawable/ic_calendar_black</item>
+        <item name="android:textColorHint">#FFF</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

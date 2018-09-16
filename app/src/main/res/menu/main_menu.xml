@@ -2,8 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_add_event"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="@string/action_add_event"
+        app:iconTint="#FFF"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_show_settings"
-        android:icon="@drawable/settings_icon"
+        android:icon="@drawable/ic_settings_black_24dp"
+        app:iconTint="#FFF"
         android:title="@string/action_show_settings"
         app:showAsAction="ifRoom"/>
 

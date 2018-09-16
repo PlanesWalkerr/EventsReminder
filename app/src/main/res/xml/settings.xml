@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:key="preference_screen">
     <Preference
         android:key="@string/key_contacts_import"
@@ -17,5 +18,10 @@
     <Preference
         android:key="@string/key_import_sdcard"
         android:title="Import data from SD Card"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/key_switch_mode"
+        android:title="Night mode" />
 
 </PreferenceScreen>
