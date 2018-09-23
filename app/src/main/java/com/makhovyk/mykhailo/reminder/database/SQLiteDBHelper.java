@@ -64,7 +64,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         String sqlQuery = "select * from " + TABLE_EVENTS + " where " + EVENT_TIMESTAMP + "=" + timestamp;
         Cursor cursor = this.getReadableDatabase().rawQuery(sqlQuery, null);
         Event event = new Event();
-        //Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
         if (cursor.moveToFirst()) {
             do {
                 int nameIndex = cursor.getColumnIndex(EVENT_NAME);
@@ -92,7 +91,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         ArrayList<Event> events = new ArrayList<Event>();
         String sqlQuery = "select * from " + TABLE_EVENTS + " order by cast(strftime('%m', date) as integer)";
         Cursor cursor = this.getReadableDatabase().rawQuery(sqlQuery, null);
-        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
         if (cursor.moveToFirst()) {
             do {
                 int timestampIndex = cursor.getColumnIndex(EVENT_TIMESTAMP);

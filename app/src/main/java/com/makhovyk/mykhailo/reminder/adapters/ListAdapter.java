@@ -20,6 +20,7 @@ import com.makhovyk.mykhailo.reminder.database.SQLiteDBHelper;
 import com.makhovyk.mykhailo.reminder.model.Event;
 import com.makhovyk.mykhailo.reminder.model.ListItem;
 import com.makhovyk.mykhailo.reminder.model.Separator;
+import com.makhovyk.mykhailo.reminder.notifications.AlarmHelper;
 import com.makhovyk.mykhailo.reminder.utils.Constants;
 import com.makhovyk.mykhailo.reminder.utils.Utils;
 
@@ -34,8 +35,8 @@ import butterknife.ButterKnife;
 public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ListItem> events;
-    private final String TAG = "TAG";
-    Context context;
+    private final String TAG = "zaebalo";
+    private Context context;
 
 
     class BirthdayHolder extends EventViewHolder {
@@ -63,7 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvType.setText(event.getType());
             int age = Utils.getAge(event.getYear());
             if (!event.isYearUnknown() && age >= 0) {
-                tvAge.setText(age + "");
+                tvAge.setText(String.valueOf(age));
             } else {
                 tvAge.setText("--");
             }
@@ -96,7 +97,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tvEventName.setText(event.getEventName());
             int age = Utils.getAge(event.getYear());
             if (!event.isYearUnknown() && age >= 0) {
-                tvAge.setText(age + "");
+                tvAge.setText(String.valueOf(age));
             } else {
                 tvAge.setText("--");
             }
@@ -151,13 +152,15 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-
+        Event e;
         switch (holder.getItemViewType()) {
             case 1:
+                e = (Event) events.get(position);
                 BirthdayHolder bh = (BirthdayHolder) holder;
                 bh.bindEvent((Event) events.get(position));
                 break;
             case 3:
+                e = (Event) events.get(position);
                 OtherEventHolder oh = (OtherEventHolder) holder;
                 oh.bindEvent((Event) events.get(position));
                 break;
@@ -171,7 +174,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public boolean onLongClick(View view) {
                 if (!events.get(position).isSeparator()) {
-                    PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.RIGHT);
+                    PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
                     popup.inflate(R.menu.options_menu);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -215,16 +218,14 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return 5;
         }
         Event event = (Event) events.get(position);
-        switch (event.getType()) {
-            case Constants.TYPE_BIRTHDAY:
-                return 1;
-            case Constants.TYPE_ANNIVERSARY:
-                return 1;
-            case Constants.TYPE_OTHER_EVENT:
-                return 3;
-            default:
-                return 10;
+        final String typeBirthday = context.getResources().getString(R.string.type_birthday);
+        final String typeAnniversary = context.getResources().getString(R.string.type_anniversary);
+        final String typeOtherEvent = context.getResources().getString(R.string.type_other_event);
 
+        if (event.getType().equals(typeBirthday) || event.getType().equals(typeAnniversary)) {
+            return 1;
+        } else {
+            return 3;
         }
     }
 
@@ -238,11 +239,10 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         dbHelper.deleteEvent(event.getTimestamp());
         Log.v(TAG, "Deleting item " + " : " + event.toString());
         events.remove(event);
-
-
+        new AlarmHelper(context).deleteAlarm(event.getTimestamp());
+        removeRedundantSeparators();
         notifyDataSetChanged();
-        Log.v(TAG, events.size() + "");
-        Toast.makeText(context, "Deleted ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.msg_deleted), Toast.LENGTH_SHORT).show();
     }
 
     private void editEvent(Event event) {

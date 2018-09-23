@@ -8,11 +8,13 @@ import android.util.Log;
 import com.makhovyk.mykhailo.reminder.R;
 import com.makhovyk.mykhailo.reminder.model.Event;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -92,76 +94,76 @@ public class Utils {
         return imageId;
     }
 
-    public static String getZodiacSign(int day, int month) {
+    public static int getZodiacSign(int day, int month) {
         Log.v("TAG", month + "");
-        String zodiac = "";
+        int zodiac = 0;
         switch (month) {
             case 1:
-                zodiac = (day < 20) ? Constants.ZODIAK_CAPRICORN : Constants.ZODIAK_AQUARIUS;
+                zodiac = (day < 20) ? R.string.zodiac_capricorn : R.string.zodiac_aquarius;
                 break;
             case 2:
-                zodiac = (day < 18) ? Constants.ZODIAK_AQUARIUS : Constants.ZODIAK_PISCES;
+                zodiac = (day < 18) ? R.string.zodiac_aquarius : R.string.zodiac_pisces;
                 break;
             case 3:
-                zodiac = (day < 21) ? Constants.ZODIAK_PISCES : Constants.ZODIAK_ARIES;
+                zodiac = (day < 21) ? R.string.zodiac_pisces : R.string.zodiac_aries;
                 break;
             case 4:
-                zodiac = (day < 20) ? Constants.ZODIAK_ARIES : Constants.ZODIAK_TAURUS;
+                zodiac = (day < 20) ? R.string.zodiac_aries : R.string.zodiac_taurus;
                 break;
             case 5:
-                zodiac = (day < 21) ? Constants.ZODIAK_TAURUS : Constants.ZODIAK_GEMINI;
+                zodiac = (day < 21) ? R.string.zodiac_taurus : R.string.zodiac_gemini;
                 break;
             case 6:
-                zodiac = (day < 21) ? Constants.ZODIAK_GEMINI : Constants.ZODIAK_CANCER;
+                zodiac = (day < 21) ? R.string.zodiac_gemini : R.string.zodiac_cancer;
                 break;
             case 7:
-                zodiac = (day < 23) ? Constants.ZODIAK_CANCER : Constants.ZODIAK_LEO;
+                zodiac = (day < 23) ? R.string.zodiac_cancer : R.string.zodiac_leo;
                 break;
             case 8:
-                zodiac = (day < 23) ? Constants.ZODIAK_LEO : Constants.ZODIAK_VIRGO;
+                zodiac = (day < 23) ? R.string.zodiac_leo : R.string.zodiac_virgo;
                 break;
             case 9:
-                zodiac = (day < 23) ? Constants.ZODIAK_VIRGO : Constants.ZODIAK_LIBRA;
+                zodiac = (day < 23) ? R.string.zodiac_virgo : R.string.zodiac_libra;
                 break;
             case 10:
-                zodiac = (day < 23) ? Constants.ZODIAK_LIBRA : Constants.ZODIAK_SCORPIO;
+                zodiac = (day < 23) ? R.string.zodiac_libra : R.string.zodiac_scorpio;
                 break;
             case 11:
-                zodiac = (day < 22) ? Constants.ZODIAK_SCORPIO : Constants.ZODIAK_SAGITTARIUS;
+                zodiac = (day < 22) ? R.string.zodiac_scorpio : R.string.zodiac_sagittarius;
                 break;
             case 12:
-                zodiac = (day < 22) ? Constants.ZODIAK_SAGITTARIUS : Constants.ZODIAK_CAPRICORN;
+                zodiac = (day < 22) ? R.string.zodiac_sagittarius : R.string.zodiac_capricorn;
                 break;
         }
-        Log.v("TAG", zodiac);
+        Log.v("TAG", String.valueOf(zodiac));
         return zodiac;
     }
 
-    public static int getZodiacImageId(String zodiac) {
+    public static int getZodiacImageId(int zodiac) {
         switch (zodiac) {
-            case Constants.ZODIAK_CAPRICORN:
+            case R.string.zodiac_capricorn:
                 return R.drawable.zodiac_capricorn;
-            case Constants.ZODIAK_AQUARIUS:
+            case R.string.zodiac_aquarius:
                 return R.drawable.zodiac_aquarius;
-            case Constants.ZODIAK_PISCES:
+            case R.string.zodiac_pisces:
                 return R.drawable.zodiac_pisces;
-            case Constants.ZODIAK_ARIES:
+            case R.string.zodiac_aries:
                 return R.drawable.zodiac_aries;
-            case Constants.ZODIAK_TAURUS:
+            case R.string.zodiac_taurus:
                 return R.drawable.zodiac_taurus;
-            case Constants.ZODIAK_GEMINI:
+            case R.string.zodiac_gemini:
                 return R.drawable.zodiac_gemini;
-            case Constants.ZODIAK_CANCER:
+            case R.string.zodiac_cancer:
                 return R.drawable.zodiac_cancer;
-            case Constants.ZODIAK_LEO:
+            case R.string.zodiac_leo:
                 return R.drawable.zodiac_leo;
-            case Constants.ZODIAK_VIRGO:
+            case R.string.zodiac_virgo:
                 return R.drawable.zodiac_virgo;
-            case Constants.ZODIAK_LIBRA:
+            case R.string.zodiac_libra:
                 return R.drawable.zodiac_libra;
-            case Constants.ZODIAK_SCORPIO:
+            case R.string.zodiac_scorpio:
                 return R.drawable.zodiac_scorpio;
-            case Constants.ZODIAK_SAGITTARIUS:
+            case R.string.zodiac_sagittarius:
                 return R.drawable.zodiac_sagittarius;
             default:
                 return 0;
@@ -227,5 +229,9 @@ public class Utils {
             return R.drawable.circle_age_31_45;
         }
         return R.drawable.circle_age_46_;
+    }
+
+    public static String getDate(long date) {
+        return DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault()).format(date);
     }
 }

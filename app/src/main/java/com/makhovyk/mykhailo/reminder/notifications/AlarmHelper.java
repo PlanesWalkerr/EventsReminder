@@ -31,10 +31,16 @@ public class AlarmHelper {
     }
 
     public void setAlarm(Event event, boolean postpone) {
-        long notifyAt = preferences.getLong(Constants.NOTIFICATION_TIME, 0);
+        Calendar defaultCalendar = Calendar.getInstance();
+        defaultCalendar.set(Calendar.HOUR_OF_DAY, 9);
+        defaultCalendar.set(Calendar.MINUTE, 0);
 
+        long notifyAt = preferences.getLong(Constants.NOTIFICATION_TIME, defaultCalendar.getTimeInMillis());
+
+        Log.v("TAG", "default time: " + defaultCalendar.getTime().toString());
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(notifyAt);
+        calendar.set(Calendar.SECOND, 0);
         if (!postpone) {
             if (Utils.notifyThisYear(event.getDate())) {
                 calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
@@ -52,9 +58,7 @@ public class AlarmHelper {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.EVENT, event);
-        notifyIntent.putExtra("bundle", bundle);
-//        notifyIntent.putExtra(Constants.EVENT, (Serializable) event);
-//        notifyIntent.setAction(event.getTimestamp() + "");
+        notifyIntent.putExtra(Constants.BUNDLE, bundle);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 
@@ -71,7 +75,7 @@ public class AlarmHelper {
         } else {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
-        Log.d("hello", calendar.getTime().toString());
+        Log.d("TAG", "alarm: " + calendar.getTime().toString());
 
     }
 

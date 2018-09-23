@@ -1,13 +1,19 @@
 package com.makhovyk.mykhailo.reminder.model;
 
+import android.content.res.Resources;
+import android.support.v4.content.res.ResourcesCompat;
+
+import com.makhovyk.mykhailo.reminder.R;
+
 import java.text.DateFormatSymbols;
+import java.util.Locale;
 
 public class Separator implements ListItem {
 
-    int monthNumber;
+    String month;
 
-    public Separator(int monthNumber) {
-        this.monthNumber = monthNumber;
+    public Separator(String month) {
+        this.month = month;
     }
 
     @Override
@@ -16,6 +22,6 @@ public class Separator implements ListItem {
     }
 
     public String getMonth() {
-        return new DateFormatSymbols().getMonths()[monthNumber - 1];
+        return month;
     }
 }

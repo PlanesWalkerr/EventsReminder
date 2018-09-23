@@ -11,10 +11,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.makhovyk.mykhailo.reminder.EventDetailsActivity;
 import com.makhovyk.mykhailo.reminder.ListActivity;
 import com.makhovyk.mykhailo.reminder.R;
 import com.makhovyk.mykhailo.reminder.model.Event;
@@ -33,28 +35,29 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Bundle bundle = intent.getBundleExtra("bundle");
+        Bundle bundle = intent.getBundleExtra(Constants.BUNDLE);
 
 
-        Log.d("hello", "new notification!!!");
         if (bundle != null) {
+            Log.v("TAG", "notification!");
             Event event = (Event) bundle.getSerializable(Constants.EVENT);
-            Log.d("hello", "going through!");
             createNotificationChannel(context);
-            Intent notifyIntent = new Intent(context, ListActivity.class);
+            Intent notifyIntent = new Intent(context, EventDetailsActivity.class);
+            notifyIntent.putExtra(Constants.EVENT, event);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) event.getTimestamp(),
                     notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
-            builder.setSound(alarmSound);
+            builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
             builder.setContentTitle(event.getType() + ": " + event.getPersonName());
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(event.getDate());
             int year = Calendar.getInstance().get(Calendar.YEAR) - event.getYear();
-            builder.setContentText("Today is " + year);
+            builder.setContentText(context.getString(R.string.today_is) + year);
             builder.setSmallIcon(R.drawable.ic_stat_notification_important);
+            builder.setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 builder.setChannelId(CHANNEL_ID);
@@ -71,9 +74,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             new AlarmHelper(context).setAlarm(event, true);
         }
 
-//        if (event != null) {
-//            createNotification("Hello", context);
-//        }
     }
 
     private void createNotificationChannel(Context context) {

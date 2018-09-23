@@ -36,6 +36,8 @@ public class TimePreference extends DialogPreference {
         setPositiveButtonText(R.string.set);
         setNegativeButtonText(R.string.cancel);
         calendar = Calendar.getInstance(TimeZone.getDefault());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 0);
     }
 
     @Override
@@ -70,16 +72,19 @@ public class TimePreference extends DialogPreference {
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
+        Log.v("hello", "default time");
         return (a.getString(index));
     }
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
 
-
+        Log.v("hello", "initial value: ");
+        Log.v("hello", "restore value: " + restoreValue);
         if (restoreValue) {
             if (defaultValue == null) {
                 calendar.setTimeInMillis(getPersistedLong(System.currentTimeMillis()));
+
 
             } else {
                 calendar.setTimeInMillis(Long.parseLong(getPersistedString((String) defaultValue)));
@@ -87,6 +92,8 @@ public class TimePreference extends DialogPreference {
         } else {
             if (defaultValue == null) {
                 calendar.setTimeInMillis(System.currentTimeMillis());
+//                calendar.set(Calendar.HOUR_OF_DAY, 9);
+//                calendar.set(Calendar.MINUTE, 0);
             } else {
                 calendar.setTimeInMillis(Long.parseLong((String) defaultValue));
             }

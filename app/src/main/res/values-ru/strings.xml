@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--NewEventActivity-->
+    <string name="year_checkbox">Я не помню год</string>
+    <string name="title_activity_new_person">NewPersonActivity</string>
+    <string name="bt_ok">OK</string>
+    <string name="bt_cancel">Отмена</string>
+    <string name="hint_name">Введите имя</string>
+    <string name="hint_phone">Телефон</string>
+    <string name="hint_email">Эл. почта</string>
+    <string name="hint_date">Выберите дату</string>
+    <string name="hint_event_name">Название события</string>
+    <string name="hint_from_contacts">Добавить из контактов</string>
+    <string name="error_name">Пожалуйста, введите имя</string>
+    <string name="error_date">Пожалуйста, введите дату</string>
+    <string name="error_event_name">Пожалуйста, введите название события</string>
+
+    <!--SettingsActivity-->
+    <string name="set">Установить</string>
+    <string name="cancel">Отмена</string>
+    <string name="import_contacts">Импорт из адресной книги</string>
+    <string name="export_data">Экспорт данных на SD-карту</string>
+    <string name="import_data">Импорт данных с SD-карты</string>
+    <string name="night_mode">Ночной режим</string>
+    <string name="enabled">Включен</string>
+    <string name="disabled">Отключен</string>
+
+    <!--Menu-->
+    <string name="action_show_settings">Показать настройки</string>
+    <string name="action_delete_event">Удалить событие</string>
+    <string name="action_add_event">Добавить событие</string>
+    <string name="delete_menu">Удалить</string>
+    <string name="edit_menu">Редактировать</string>
+
+    <!--EventDetailActivity-->
+    <string name="today">Сегодня</string>
+    <string name="description_season_image">Изображение сезона</string>
+    <string name="description_event_icon">Иконка события</string>
+    <string name="description_contact_icon">Иконка контактов</string>
+    <string name="description_person_icon">Иконка персонажа</string>
+    <string name="description_phone_icon">Иконка телефона</string>
+    <string name="description_calendar_icon">Иконка календаря</string>
+    <string name="description_days_left_icon">Иконка количества дней</string>
+    <string name="description_zodiac_image">Картинка зодиака</string>
+    <string name="description_call_button">Позвонить</string>
+    <string name="description_message_button">Отправить сообщение</string>
+    <string name="detail_phone_number">Номер телефона</string>
+    <string name="detail_zodiac">Знак зодиака</string>
+    <string name="detail_days_left">Дней осталось</string>
+    <string name="notification_time">Настроить время уведомления</string>
+
+    <!--Months-->
+    <string name="january">Январь</string>
+    <string name="february">Февраль</string>
+    <string name="march">Март</string>
+    <string name="april">Апрель</string>
+    <string name="may">Май</string>
+    <string name="june">Июнь</string>
+    <string name="july">Июль</string>
+    <string name="august">Август</string>
+    <string name="september">Сентябрь</string>
+    <string name="october">Октябрь</string>
+    <string name="november">Ноябрь</string>
+    <string name="december">Декабрь</string>
+
+    <!--Event types-->
+    <string name="type_birthday">день рождения</string>
+    <string name="type_anniversary">годовщина</string>
+    <string name="type_other_event">другое событие</string>
+
+    <!--messages-->
+    <string name="msg_deleted">Удалено</string>
+    <string name="msg_loading_contacts">Загружаем контакты</string>
+    <string name="confirm_dlg_title">Подтвердите удаление</string>
+    <string name="confirm_dlg_msg">Вы действительно хотите удалить это событие?</string>
+
+    <!--Signs of zodiac-->
+    <string name="zodiac_aquarius">Водолей</string>
+    <string name="zodiac_aries">Овен</string>
+    <string name="zodiac_cancer">Рак</string>
+    <string name="zodiac_capricorn">Козерог</string>
+    <string name="zodiac_gemini">Близнецы</string>
+    <string name="zodiac_leo">Лев</string>
+    <string name="zodiac_libra">Весы</string>
+    <string name="zodiac_pisces">Рыбы</string>
+    <string name="zodiac_sagittarius">Стрелец</string>
+    <string name="zodiac_scorpio">Скорпион</string>
+    <string name="zodiac_taurus">Телец</string>
+    <string name="zodiac_virgo">Дева</string>
+
+    <!--Notifications-->
+    <string name="today_is">Сегодня исполняется\u0020</string>
+
+</resources>

@@ -5,23 +5,24 @@
     android:key="preference_screen">
     <Preference
         android:key="@string/key_contacts_import"
-        android:title="Import from contact book"/>
+        android:title="@string/import_contacts" />
 
     <com.makhovyk.mykhailo.reminder.utils.TimePreference
         android:key="@string/key_notification_time"
-        android:title="Set notification time"/>
+        android:title="@string/notification_time" />
 
     <Preference
         android:key="@string/key_export_sdcard"
-        android:title="Export data to SD Card"/>
+        android:title="@string/export_data" />
 
     <Preference
         android:key="@string/key_import_sdcard"
-        android:title="Import data from SD Card"/>
+        android:title="@string/import_data" />
 
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/key_switch_mode"
-        android:title="Night mode" />
+        android:title="@string/night_mode" />
+
 
 </PreferenceScreen>

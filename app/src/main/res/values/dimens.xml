@@ -1,4 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="default_padding">70sp</dimen>
+    <dimen name="text__size_20_sp">20sp</dimen>
+    <dimen name="text__size_18_sp">18sp</dimen>
+    <dimen name="text_size_16_sp">16sp</dimen>
 </resources>

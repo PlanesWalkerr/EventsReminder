@@ -1,39 +1,130 @@
 <resources>
-    <string name="app_name">Reminder</string>
+    <string name="app_name" translatable="false">Reminder</string>
+
+    <!--NewEventActivity-->
     <string name="year_checkbox">Don\'t remember the year?</string>
     <string name="title_activity_new_person">NewPersonActivity</string>
-
     <string name="bt_ok">OK</string>
     <string name="bt_cancel">Cancel</string>
-    <string name="action_show_settings">Show settings</string>
-    <string name="action_delete_event">Delete event</string>
-    <string name="action_add_event">Add event</string>
-
-
     <string name="hint_name">Enter the name</string>
     <string name="hint_phone">Phone</string>
     <string name="hint_email">Email</string>
     <string name="hint_date">Choose a date</string>
     <string name="hint_event_name">Event name</string>
     <string name="hint_from_contacts">Add from contacts</string>
+    <string name="error_name">Please enter a name</string>
+    <string name="error_date">Please enter a date</string>
+    <string name="error_event_name">Please enter event name</string>
 
+    <!--Settings keys-->
     <string name="key_contacts_import">contacts_import</string>
     <string name="key_notification_time">notification_time</string>
-    <string name="set">Set</string>
-    <string name="cancel">Cancel</string>
-    <string name="channel_name">Reminder</string>
-    <string name="delete_menu">Delete</string>
-    <string name="edit_menu">Edit</string>
-
     <string name="key_export_sdcard">export_sdcard</string>
     <string name="key_import_sdcard">import_data</string>
     <string name="key_switch_mode">switch_mode</string>
 
-    <string name="error_name">Please enter a name</string>
-    <string name="error_date">Please enter a name</string>
-    <string name="error_event_name">Please enter event name</string>
-    <string name="season_image">season image</string>
+    <!--SettingsActivity-->
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="import_contacts">Import from contact book</string>
+    <string name="export_data">Export data to SD Card</string>
+    <string name="import_data">Import data from SD Card</string>
+    <string name="night_mode">Night mode</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
 
+
+    <!--Notifications-->
+    <string name="channel_name">Reminder</string>
+    <string name="today_is">Today is\u0020</string>
+
+    <!--Menu-->
+    <string name="action_show_settings">Show settings</string>
+    <string name="action_delete_event">Delete event</string>
+    <string name="action_add_event">Add event</string>
+    <string name="delete_menu">Delete</string>
+    <string name="edit_menu">Edit</string>
+
+    <!--EventDetailActivity-->
     <string name="today">Today</string>
+    <string name="description_season_image">season image</string>
+    <string name="description_event_icon">event icon</string>
+    <string name="description_contact_icon">contact icon</string>
+    <string name="description_person_icon">person icon</string>
+    <string name="description_phone_icon">phone icon</string>
+    <string name="description_calendar_icon">calendar icon</string>
+    <string name="description_days_left_icon">days left icon</string>
+    <string name="description_zodiac_image">zodiac image</string>
+    <string name="description_call_button">call button</string>
+    <string name="description_message_button">message button</string>
+    <string name="detail_phone_number">Phone number</string>
+    <string name="detail_zodiac">Sign of zodiac</string>
+    <string name="detail_days_left">Days left</string>
+    <string name="notification_time">Set notification time</string>
+
+    <!--Months-->
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+
+    <string-array name="months">
+        <item>@string/january</item>
+        <item>@string/february</item>
+        <item>@string/march</item>
+        <item>@string/april</item>
+        <item>@string/may</item>
+        <item>@string/june</item>
+        <item>@string/july</item>
+        <item>@string/august</item>
+        <item>@string/september</item>
+        <item>@string/october</item>
+        <item>@string/november</item>
+        <item>@string/december</item>
+    </string-array>
+
+    <!--Event types-->
+    <string name="type_birthday">birthday</string>
+    <string name="type_anniversary">anniversary</string>
+    <string name="type_other_event">other event</string>
+
+    <string-array name="types">
+        <item>@string/type_birthday</item>
+        <item>@string/type_anniversary</item>
+        <item>@string/type_other_event</item>
+    </string-array>
+
+    <!--messages-->
+    <string name="msg_deleted">Deleted</string>
+    <string name="msg_loading_contacts">Loading contacts</string>
+    <string name="confirm_dlg_title">Confirm deleting</string>
+    <string name="confirm_dlg_msg">Do you really want to delete this event?</string>
+
+    <!--Signs of zodiac-->
+    <string name="zodiac_aquarius">Aquarius</string>
+    <string name="zodiac_aries">Aries</string>
+    <string name="zodiac_cancer">Cancer</string>
+    <string name="zodiac_capricorn">Capricorn</string>
+    <string name="zodiac_gemini">Gemini</string>
+    <string name="zodiac_leo">Leo</string>
+    <string name="zodiac_libra">Libra</string>
+    <string name="zodiac_pisces">Pisces</string>
+    <string name="zodiac_sagittarius">Sagittarius</string>
+    <string name="zodiac_scorpio">Scorpio</string>
+    <string name="zodiac_taurus">Taurus</string>
+    <string name="zodiac_virgo">Virgo</string>
+
+
+    <string name="key_fb_import">fb_import</string>
+    <string name="fb_import">Import contacts from Facebook</string>
+    <string name="facebook_app_id">373222226552473</string>
 
 </resources>

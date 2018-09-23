@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.makhovyk.mykhailo.reminder.R;
 import com.makhovyk.mykhailo.reminder.database.SQLiteDBHelper;
 import com.makhovyk.mykhailo.reminder.model.Event;
+import com.makhovyk.mykhailo.reminder.notifications.AlarmHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +87,7 @@ public class ContactsManager {
                 Event event = new Event();
                 event.setPersonName(entry.getValue().get("name"));
                 event.setPhone(entry.getValue().get("phone"));
-                event.setType("birthday");
+                event.setType(activity.getString(R.string.type_birthday));
                 String dateString = entry.getValue().get("birthday");
                 event.setYearUnknown(Utils.isYearUnknown(dateString));
                 Long date = Utils.getDateFromString(dateString);
@@ -112,7 +115,7 @@ public class ContactsManager {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialogHelper.showProgressDialog("Loading contacts");
+            progressDialogHelper.showProgressDialog(activity.getString(R.string.msg_loading_contacts));
         }
 
         @Override
@@ -131,10 +134,13 @@ public class ContactsManager {
             SQLiteDBHelper dbHelper = new SQLiteDBHelper(activity);
             ArrayList<Event> eventsFromDB = dbHelper.getEvents();
             ArrayList<Event> eventsFromContacts = readEventsFromContacts();
+            AlarmHelper alarmHelper = new AlarmHelper(activity);
 
             for (Event e : eventsFromContacts) {
                 if (!Utils.isEventAlreadyInDB(eventsFromDB, e)) {
                     dbHelper.writeEvent(e);
+                    alarmHelper.setAlarm(e, false);
+                    Log.v("TAG", "alarm set to " + e.getPersonName());
                 }
             }
             return null;

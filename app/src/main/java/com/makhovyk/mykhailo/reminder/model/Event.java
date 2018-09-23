@@ -113,7 +113,7 @@ public class Event implements Serializable, ListItem {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String formattedDate = sdf.format(date);
         return "Event{" +
-                ", type='" + type + '\'' +
+                "type='" + type + '\'' +
                 ", date='" + formattedDate + '\'' +
                 ", eventName='" + eventName + '\'' +
                 ", personName='" + personName + '\'' +

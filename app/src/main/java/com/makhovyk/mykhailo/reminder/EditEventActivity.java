@@ -49,8 +49,7 @@ public class EditEventActivity extends AppCompatActivity {
     public static final String KEY_EVENT = "event";
 
     final String TAG = "TAG";
-    private final String[] types = {Constants.TYPE_BIRTHDAY, Constants.TYPE_ANNIVERSARY,
-            Constants.TYPE_OTHER_EVENT};
+    private String[] types;
     Event event;
 
     @BindView(R.id.sp_type)
@@ -86,10 +85,8 @@ public class EditEventActivity extends AppCompatActivity {
         Utils.setupNightMode(this);
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             setTheme(R.style.DarkTheme);
-            Log.v("TAG", "Dark");
         } else {
             setTheme(R.style.LightTheme);
-            Log.v("TAG", "Light");
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
@@ -98,8 +95,7 @@ public class EditEventActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final Drawable errorBg = ContextCompat.getDrawable(this, R.drawable.et_border);
-        final Drawable defaultBg = etName.getBackground();
+        types = getResources().getStringArray(R.array.types);
 
         final DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -187,17 +183,16 @@ public class EditEventActivity extends AppCompatActivity {
 
     @OnItemSelected(R.id.sp_type)
     public void spinnerItemSelected(Spinner spinner, View selectedItemView, int position) {
-        switch (types[position]) {
-            case Constants.TYPE_BIRTHDAY:
-                llEventName.setVisibility(View.GONE);
-                break;
-            case Constants.TYPE_ANNIVERSARY:
-                llEventName.setVisibility(View.GONE);
-                break;
-            case Constants.TYPE_OTHER_EVENT:
-                llEventName.setVisibility(View.VISIBLE);
-                etEventName.requestFocus();
-                break;
+        final String typeBirthday = getResources().getString(R.string.type_birthday);
+        final String typeAnniversary = getResources().getString(R.string.type_anniversary);
+        final String typeOtherEvent = getResources().getString(R.string.type_other_event);
+        if (types[position].equals(typeBirthday)) {
+            llEventName.setVisibility(View.GONE);
+        } else if (types[position].equals(typeAnniversary)) {
+            llEventName.setVisibility(View.GONE);
+        } else if (types[position].equals(typeOtherEvent)) {
+            llEventName.setVisibility(View.VISIBLE);
+            etEventName.requestFocus();
         }
     }
 
@@ -213,10 +208,9 @@ public class EditEventActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (spType.getSelectedItem().toString().equals(Constants.TYPE_OTHER_EVENT)) {
+        if (spType.getSelectedItem().toString().equals(getString(R.string.type_other_event))) {
             event.setEventName(etEventName.getText().toString());
         }
-        Log.v("fuck", event.toString());
 
         SQLiteDBHelper dbHelper = new SQLiteDBHelper(this);
         dbHelper.updateEvent(event);
@@ -224,25 +218,6 @@ public class EditEventActivity extends AppCompatActivity {
 
 
     }
-
-//    private void checkFields() {
-//        if (spType.getSelectedItem().toString().equals(Constants.TYPE_OTHER_EVENT)) {
-//            if (etName.getText().toString().trim().equals("")
-//                    || etEventName.getText().toString().trim().equals("")
-//                    || etDate.getText().toString().trim().equals("")) {
-//                btOk.setEnabled(false);
-//            } else {
-//                btOk.setEnabled(true);
-//            }
-//        } else {
-//            if (etName.getText().toString().trim().equals("")
-//                    || etDate.getText().toString().trim().equals("")) {
-//                btOk.setEnabled(false);
-//            } else {
-//                btOk.setEnabled(true);
-//            }
-//        }
-//    }
 
     private DatePicker findDatePicker(ViewGroup group) {
         if (group != null) {
@@ -277,15 +252,12 @@ public class EditEventActivity extends AppCompatActivity {
 
     private boolean validate() {
         if (!validateEventName()) {
-            Log.d("hello", "event name validated");
             return false;
         }
         if (!validateName()) {
-            Log.d("hello", " name validated");
             return false;
         }
         if (!validateDate()) {
-            Log.d("hello", "date validated");
             return false;
         }
         return true;

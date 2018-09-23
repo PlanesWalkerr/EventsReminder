@@ -1,11 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
 
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="android:actionBarStyle">@style/myTheme.ActionBar</item>
     </style>
 
     <!-- Light application theme. -->
@@ -19,11 +19,10 @@
         <item name="iconColor">@color/cyanDark</item>
         <item name="mainColor">@color/cyanDark</item>
         <item name="separatorColor">@color/cyanDark</item>
-        <item name="fabColor">@color/cyanLight</item>
-        <item name="menuColor">#000</item>
         <item name="cardViewBackgroundColor">#FFF</item>
-        <item name="personIcon">@drawable/ic_person_icon_black</item>
+        <item name="detailBackgroundColor">#f2f0f0</item>
         <item name="android:textColorHint">#808080</item>
+
     </style>
 
     <!-- Dak application theme. -->
@@ -34,15 +33,79 @@
         <item name="colorControlNormal">#FFF</item>
         <item name="primaryTextColor">#fff</item>
         <item name="secondaryTextColor">@color/colorLightGrey</item>
-        <item name="backgroundColor">#212121</item>
+        <item name="backgroundColor">#424242</item>
         <item name="separatorColor">@color/colorLightGreen</item>
-        <item name="fabColor">@color/colorLightGreen</item>
         <item name="iconColor">@color/cyanIconColor</item>
-        <item name="menuColor">#FFF</item>
         <item name="cardViewBackgroundColor">#424242</item>
-        <item name="personIcon">@drawable/ic_calendar_black</item>
+        <item name="detailBackgroundColor">#212121</item>
         <item name="android:textColorHint">#FFF</item>
     </style>
 
+    <style name="imageViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:tint">?attr/iconColor</item>
+    </style>
+
+    <style name="horizontalLinearLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="textInputLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="editTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/primaryTextColor</item>
+    </style>
+
+    <style name="cardViewStyle" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardBackgroundColor">?attr/cardViewBackgroundColor</item>
+    </style>
+
+    <style name="textViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Primary.TextView" parent="textViewStyle">
+        <item name="android:textColor">?attr/primaryTextColor</item>
+        <item name="android:textSize">@dimen/text__size_18_sp</item>
+    </style>
+
+    <style name="Secondary.TextView" parent="textViewStyle">
+        <item name="android:textColor">?attr/secondaryTextColor</item>
+        <item name="android:textSize">@dimen/text_size_16_sp</item>
+    </style>
+
+    <style name="detailIconStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:tint">?attr/iconColor</item>
+    </style>
+
+    <style name="myTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/myTheme.ActionBar.Text</item>
+    </style>
+
+    <style name="myTheme.ActionBar.Text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#FFF</item>
+    </style>
+
+    <style name="listItemTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text__size_20_sp</item>
+        <item name="android:textColor">?attr/primaryTextColor</item>
+    </style>
 
 </resources>

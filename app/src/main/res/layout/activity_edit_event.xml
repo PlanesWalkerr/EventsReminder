@@ -26,47 +26,35 @@
 
             <LinearLayout
                 android:id="@+id/ll_event_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                style="@style/horizontalLinearLayoutStyle"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_event_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_cake_black_24dp"
-                    android:tint="?attr/iconColor" />
+                    style="@style/imageViewStyle"
+                    android:contentDescription="@string/description_event_icon"
+                    android:src="@drawable/ic_cake_black_24dp" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/il_event_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/textInputLayoutStyle">
 
                     <EditText
                         android:id="@+id/et_event_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/editTextStyle"
                         android:hint="@string/hint_event_name"
-                        android:inputType="text"
-                        android:textColor="?attr/primaryTextColor" />
+                        android:inputType="text" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <LinearLayout style="@style/horizontalLinearLayoutStyle">
 
                 <ImageView
                     android:id="@+id/iv_contact_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_contact__black_24dp"
-                    android:tint="?attr/iconColor" />
+                    style="@style/imageViewStyle"
+                    android:contentDescription="@string/description_contact_icon"
+                    android:src="@drawable/ic_contact__black_24dp" />
 
                 <Button
                     android:id="@+id/bt_contact"
@@ -80,92 +68,68 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <LinearLayout style="@style/horizontalLinearLayoutStyle">
 
                 <ImageView
                     android:id="@+id/iv_person_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_person_icon_black"
-                    android:tint="?attr/iconColor" />
+                    style="@style/imageViewStyle"
+                    android:contentDescription="@string/description_person_icon"
+                    android:src="@drawable/ic_person_icon_black" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/il_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/textInputLayoutStyle">
 
 
                     <EditText
                         android:id="@+id/et_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/editTextStyle"
                         android:hint="@string/hint_name"
-                        android:inputType="text"
-                        android:textColor="?attr/primaryTextColor" />
+                        android:inputType="text" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <LinearLayout style="@style/horizontalLinearLayoutStyle">
 
                 <ImageView
                     android:id="@+id/iv_phone_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_phone_black"
-                    android:tint="?attr/iconColor" />
+                    style="@style/imageViewStyle"
+                    android:contentDescription="@string/description_phone_icon"
+                    android:src="@drawable/ic_phone_black" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/il_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/textInputLayoutStyle">
 
                     <EditText
                         android:id="@+id/et_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/editTextStyle"
                         android:hint="@string/hint_phone"
-                        android:inputType="phone"
-                        android:textColor="?attr/primaryTextColor" />
+                        android:inputType="phone" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <LinearLayout style="@style/horizontalLinearLayoutStyle">
 
                 <ImageView
                     android:id="@+id/iv_calendar_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_calendar_black"
-                    android:tint="?attr/iconColor" />
+                    style="@style/imageViewStyle"
+                    android:contentDescription="@string/description_calendar_icon"
+                    android:src="@drawable/ic_calendar_black" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/il_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/textInputLayoutStyle">
 
                     <EditText
                         android:id="@+id/et_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/editTextStyle"
                         android:clickable="true"
                         android:focusable="false"
                         android:hint="@string/hint_date"
                         android:inputType="none"
                         android:longClickable="false"
-                        android:textColor="?attr/primaryTextColor"
                         tools:ignore="TextFields" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

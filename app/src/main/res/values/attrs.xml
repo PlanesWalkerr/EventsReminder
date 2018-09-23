@@ -7,12 +7,8 @@
         <attr name="iconColor" format="color" />
         <attr name="mainColor" format="color" />
         <attr name="separatorColor" format="color" />
-        <attr name="fabColor" format="color" />
-        <attr name="menuColor" format="color" />
         <attr name="cardViewBackgroundColor" format="color" />
+        <attr name="detailBackgroundColor" format="color" />
 
-        <attr name="personIcon" format="reference" />
-        <attr name="phoneIcon" format="reference" />
-        <attr name="calendarIcon" format="reference" />
     </declare-styleable>
 </resources>

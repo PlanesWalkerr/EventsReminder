@@ -19,27 +19,18 @@
 
         <TextView
             android:id="@+id/tv_event_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="?attr/primaryTextColor"
-            tools:text="event name" />
+            style="@style/listItemTextViewStyle" />
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="?attr/primaryTextColor"
-            tools:text="name" />
+            style="@style/listItemTextViewStyle" />
 
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="?attr/secondaryTextColor"
-            tools:text="date" />
+            android:textSize="@dimen/text_size_16_sp"
+            android:textColor="?attr/secondaryTextColor" />
     </LinearLayout>
 
     <LinearLayout

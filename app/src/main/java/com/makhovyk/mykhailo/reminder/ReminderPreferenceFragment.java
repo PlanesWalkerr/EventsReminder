@@ -1,9 +1,11 @@
 package com.makhovyk.mykhailo.reminder;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -15,16 +17,20 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.makhovyk.mykhailo.reminder.backup.BackupHelper;
+import com.makhovyk.mykhailo.reminder.backup.ExportHelper;
+import com.makhovyk.mykhailo.reminder.backup.ImportHelper;
 import com.makhovyk.mykhailo.reminder.notifications.AlarmHelper;
 import com.makhovyk.mykhailo.reminder.utils.Constants;
 import com.makhovyk.mykhailo.reminder.utils.ContactsManager;
+import com.makhovyk.mykhailo.reminder.utils.PermissionsManager;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.SharedPreferences.*;
 
 
@@ -36,16 +42,18 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
     };
     ContactsManager contactsManager;
     SharedPreferences preferences;
-    BackupHelper backupHelper;
+    ExportHelper exportHelper;
     SwitchPreference switchMode;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
 
         contactsManager = new ContactsManager(getActivity());
-        backupHelper = new BackupHelper(getActivity());
+        exportHelper = new ExportHelper(getActivity());
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         Preference importFromContactsPref = findPreference(getString(R.string.key_contacts_import));
@@ -75,12 +83,13 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
             }
         });
 
+
         Preference exportToSDCard = findPreference(getString(R.string.key_export_sdcard));
         exportToSDCard.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                BackupHelper backupHelper = new BackupHelper(getActivity());
-                backupHelper.exportData();
+                ExportHelper exportHelper = new ExportHelper(getActivity());
+                exportHelper.exportRecords();
                 return true;
             }
         });
@@ -89,10 +98,32 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
         importFromSDCard.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                backupHelper.importData();
+
+//                Intent chooseFile;
+//                Intent intent;
+//                chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+//                chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+//                chooseFile.setType("file/*");
+//                intent = Intent.createChooser(chooseFile, "Choose a file");
+//                startActivityForResult(intent, Constants.CHOOSE_DIRECTORY_REQUEST_CODE);
+                if (PermissionsManager.isWritingSDCardPermissionGranted(getActivity())) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT)
+                                .setType("text/xml")
+                                .addCategory(Intent.CATEGORY_OPENABLE)
+                                .putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                        startActivityForResult(intent, Constants.CHOOSE_DIRECTORY_REQUEST_CODE);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getActivity(), "Failed to recover",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    PermissionsManager.requestReadingSDCardPermission(getActivity());
+                }
                 return true;
             }
         });
+
 
         switchMode = (SwitchPreference) findPreference(getString(R.string.key_switch_mode));
         switchMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -100,39 +131,26 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
             public boolean onPreferenceChange(Preference preference, Object o) {
                 boolean isOn = (boolean) o;
                 if (isOn) {
-                    switchMode.setSummary("Enabled");
+                    switchMode.setSummary(R.string.enabled);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
-                    switchMode.setSummary("Disabled");
+                    switchMode.setSummary(R.string.disabled);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
+                restartApp();
                 return true;
             }
         });
-        /*
-        switchMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                boolean isOn = switchMode.isChecked();
-               /* boolean isOn = PreferenceManager.getDefaultSharedPreferences(getActivity())
-                        .getBoolean(getString(R.string.key_switch_mode), false);
-               /* if (isOn) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-                //restartApp();
-                Toast.makeText(getActivity(),isOn + "", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });*/
+
+
     }
 
     private void restartApp() {
-        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        Intent intent = new Intent(getActivity(), ListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
 
 
     @Override
@@ -161,7 +179,8 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                     Toast.makeText(getActivity(), "Permission to read SDCard was granted", Toast.LENGTH_LONG).show();
-                    backupHelper.importData();
+                    //!!!!!!!!!!!!!!!!!
+                    //exportHelper.importData();
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -175,7 +194,7 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                     Toast.makeText(getActivity(), "Permission to write to SDCard was granted", Toast.LENGTH_LONG).show();
-                    backupHelper.exportData();
+                    //exportHelper.exportData();
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -190,15 +209,14 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        Log.v("hello", "switched");
         if (s.equals(getString(R.string.key_switch_mode))) {
             boolean test = sharedPreferences.getBoolean(getString(R.string.key_switch_mode), false);
             //Do whatever you want here. This is an example.
             if (test) {
-                switchMode.setSummary("Enabled");
+                switchMode.setSummary(R.string.enabled);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
-                switchMode.setSummary("Disabled");
+                switchMode.setSummary(R.string.disabled);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
             restartApp();
@@ -213,9 +231,23 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
         boolean test = preferences.getBoolean(getString(R.string.key_switch_mode), false);
 
         if (test) {
-            switchMode.setSummary("Enabled");
+            switchMode.setSummary(getString(R.string.enabled));
         } else {
-            switchMode.setSummary("Disabled");
+            switchMode.setSummary(R.string.disabled);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.CHOOSE_DIRECTORY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                new ImportHelper(getActivity()).recoverRecords(getActivity(), data.getData());
+                //  Uri uri = data.getData();
+                //String FilePath = getRealPathFromURI(uri); // should the path be here in this string
+                // Log.v("TAG","Path  = " + uri);
+                //exportHelper.importData(uri);
+            }
+        }
+        ;
     }
 }

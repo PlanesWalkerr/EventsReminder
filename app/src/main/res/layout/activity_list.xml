@@ -16,17 +16,4 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/fab"-->
-    <!--android:layout_width="50dp"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:layout_gravity="end|bottom"-->
-    <!--android:layout_marginBottom="15dp"-->
-    <!--android:layout_marginEnd="15dp"-->
-    <!--android:src="@drawable/plus_icon"-->
-    <!--android:scaleType="centerInside"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:backgroundTint="?attr/fabColor"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"/>-->
-
 </android.support.constraint.ConstraintLayout>
