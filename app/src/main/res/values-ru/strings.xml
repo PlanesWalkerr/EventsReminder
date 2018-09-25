@@ -114,5 +114,6 @@
     <string name="read_sdcard_permission_not_granted">Разрешение на чтение с SD карты не было предоставлено</string>
     <string name="write_sdcard_permission_not_granted">Разрешение на запись на SD карту не было предоставлено</string>
     <string name="backup_and_synchronization">Резервное копирование и синхронизация</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
 
 </resources>

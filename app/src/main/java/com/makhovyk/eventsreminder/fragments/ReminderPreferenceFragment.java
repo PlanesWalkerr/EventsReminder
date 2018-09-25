@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -48,6 +49,7 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
     SwitchPreference switchModePref;
     Preference versionPref;
     Preference contactMePref;
+    Preference privacyPolicyPref;
     ListPreference additionalNotificationPref;
 
     @Override
@@ -166,6 +168,16 @@ public class ReminderPreferenceFragment extends PreferenceFragment implements On
             public boolean onPreferenceChange(Preference preference, Object o) {
                 additionalNotificationPref.setValue(o.toString());
                 additionalNotificationPref.setSummary(additionalNotificationPref.getEntry());
+                return true;
+            }
+        });
+
+        privacyPolicyPref = findPreference(getString(R.string.key_privacy_policy));
+        privacyPolicyPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                getActivity().startActivity(Intent.createChooser(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(getString(R.string.privacy_policy_link))), null));
                 return true;
             }
         });

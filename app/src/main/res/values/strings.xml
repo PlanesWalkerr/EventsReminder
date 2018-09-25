@@ -25,6 +25,7 @@
     <string name="key_version" translatable="false">version</string>
     <string name="key_contact_me" translatable="false">contact_me</string>
     <string name="key_additional_notification">key_additional_notification</string>
+    <string name="key_privacy_policy">key_privacy_policy</string>
 
     <!--SettingsActivity-->
     <string name="set">Set</string>
@@ -45,6 +46,9 @@
     <string name="general">General</string>
     <string name="backup_and_synchronization">Backup and synchronization</string>
     <string name="additional_notification">Additional notification</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy_link" translatable="false">
+        https://cdn.rawgit.com/PlanesWalkerr/Reminder/84768608/privacy_policy.html</string>
 
     <string name="entry_never">Never</string>
     <string name="entry_1_day">1 day before</string>
