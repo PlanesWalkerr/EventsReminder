@@ -9,6 +9,7 @@
         <attr name="separatorColor" format="color" />
         <attr name="cardViewBackgroundColor" format="color" />
         <attr name="detailBackgroundColor" format="color" />
+        <attr name="settingsColor" format="color" />
 
     </declare-styleable>
 </resources>

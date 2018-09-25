@@ -5,7 +5,8 @@
         <!-- Customize your theme here. -->
 
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:actionBarStyle">@style/myTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/myActionBar</item>
+        <item name="preferenceTheme">@style/PreferenceStyle</item>
     </style>
 
     <!-- Light application theme. -->
@@ -22,6 +23,7 @@
         <item name="cardViewBackgroundColor">#FFF</item>
         <item name="detailBackgroundColor">#f2f0f0</item>
         <item name="android:textColorHint">#808080</item>
+        <item name="settingsColor">#000</item>
 
     </style>
 
@@ -39,6 +41,7 @@
         <item name="cardViewBackgroundColor">#424242</item>
         <item name="detailBackgroundColor">#212121</item>
         <item name="android:textColorHint">#FFF</item>
+        <item name="settingsColor">@color/colorLightGreen</item>
     </style>
 
     <style name="imageViewStyle">
@@ -93,12 +96,13 @@
         <item name="android:tint">?attr/iconColor</item>
     </style>
 
-    <style name="myTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:titleTextStyle">@style/myTheme.ActionBar.Text</item>
+    <style name="myActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
     </style>
 
-    <style name="myTheme.ActionBar.Text" parent="@android:style/TextAppearance">
-        <item name="android:textColor">#FFF</item>
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp
+        </item> <!-- Default for portrait is 20sp and for landscape 14sp-->
     </style>
 
     <style name="listItemTextViewStyle">
@@ -108,4 +112,19 @@
         <item name="android:textColor">?attr/primaryTextColor</item>
     </style>
 
+    <style name="PreferenceStyle" parent="@style/PreferenceThemeOverlay">
+        <item name="preferenceCategoryStyle">@style/CustomPreferenceCategory</item>
+    </style>
+
+    <style name="CustomPreferenceCategory" parent="@style/Preference.Category">
+        <item name="android:layout">@layout/settings_textview</item>
+    </style>
+
+    <style name="CustomPreferenceCategoryText" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">?attr/settingsColor</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
 </resources>

@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="preference_screen">
-    <Preference
-        android:key="@string/key_contacts_import"
-        android:title="@string/import_contacts" />
 
-    <com.makhovyk.mykhailo.reminder.utils.TimePreference
-        android:key="@string/key_notification_time"
-        android:title="@string/notification_time" />
+    <PreferenceCategory
+        android:layout="@layout/settings_textview"
+        android:title="@string/general">
 
-    <Preference
-        android:key="@string/key_export_sdcard"
-        android:title="@string/export_data" />
+        <com.makhovyk.eventsreminder.preferences.TimePreference
+            android:key="@string/key_notification_time"
+            android:title="@string/notification_time" />
 
-    <Preference
-        android:key="@string/key_import_sdcard"
-        android:title="@string/import_data" />
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/additional_notification_entries"
+            android:entryValues="@array/additional_notification_alias"
+            android:key="@string/key_additional_notification"
+            android:summary="%s"
+            android:title="@string/additional_notification" />
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="@string/key_switch_mode"
-        android:title="@string/night_mode" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_switch_mode"
+            android:title="@string/night_mode" />
+    </PreferenceCategory>
 
+    <PreferenceCategory
+        android:layout="@layout/settings_textview"
+        android:title="@string/backup_and_synchronization">
+        <Preference
+            android:key="@string/key_contacts_import"
+            android:summary="@string/import_contacts_summary"
+            android:title="@string/import_contacts" />
+
+        <Preference
+            android:key="@string/key_export_sdcard"
+            android:summary="@string/export_data_summary"
+            android:title="@string/export_data" />
+
+        <Preference
+            android:key="@string/key_import_sdcard"
+            android:summary="@string/import_data_summary"
+            android:title="@string/import_data" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/settings_textview"
+        android:title="@string/about">
+        <Preference
+            android:key="@string/key_contact_me"
+            android:summary="@string/contact_me_summary"
+            android:title="@string/contact_me" />
+        <Preference
+            android:key="@string/key_version"
+            android:summary="1.0"
+            android:title="@string/version" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

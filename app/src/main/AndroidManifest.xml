@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.makhovyk.mykhailo.reminder">
+    package="com.makhovyk.eventsreminder">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SET_ALARM" />
@@ -19,23 +19,23 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:replace="android:theme">
-        <activity android:name=".ListActivity">
+        <activity android:name="com.makhovyk.eventsreminder.activities.ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewEventActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".EditEventActivity" />
-        <activity android:name=".EventDetailsActivity" />
+        <activity android:name="com.makhovyk.eventsreminder.activities.NewEventActivity" />
+        <activity android:name="com.makhovyk.eventsreminder.activities.SettingsActivity" />
+        <activity android:name="com.makhovyk.eventsreminder.activities.EditEventActivity" />
+        <activity android:name="com.makhovyk.eventsreminder.activities.EventDetailsActivity" />
 
         <receiver
-            android:name=".notifications.AlarmReceiver"
+            android:name="com.makhovyk.eventsreminder.notifications.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
-        <receiver android:name=".notifications.DeviceBootReceiver">
+        <receiver android:name="com.makhovyk.eventsreminder.notifications.DeviceBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

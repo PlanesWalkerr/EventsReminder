@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Reminder</string>
+    <string name="app_name" translatable="false">Events Reminder</string>
 
     <!--NewEventActivity-->
     <string name="year_checkbox">Don\'t remember the year?</string>
@@ -17,25 +17,60 @@
     <string name="error_event_name">Please enter event name</string>
 
     <!--Settings keys-->
-    <string name="key_contacts_import">contacts_import</string>
-    <string name="key_notification_time">notification_time</string>
-    <string name="key_export_sdcard">export_sdcard</string>
-    <string name="key_import_sdcard">import_data</string>
-    <string name="key_switch_mode">switch_mode</string>
+    <string name="key_contacts_import" translatable="false">contacts_import</string>
+    <string name="key_notification_time" translatable="false">notification_time</string>
+    <string name="key_export_sdcard" translatable="false">export_sdcard</string>
+    <string name="key_import_sdcard" translatable="false">import_data</string>
+    <string name="key_switch_mode" translatable="false">switch_mode</string>
+    <string name="key_version" translatable="false">version</string>
+    <string name="key_contact_me" translatable="false">contact_me</string>
+    <string name="key_additional_notification">key_additional_notification</string>
 
     <!--SettingsActivity-->
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
     <string name="import_contacts">Import from contact book</string>
+    <string name="import_contacts_summary">Import contacts from your device</string>
     <string name="export_data">Export data to SD Card</string>
+    <string name="export_data_summary">Save XML file with backup</string>
     <string name="import_data">Import data from SD Card</string>
+    <string name="import_data_summary">Recover data from XML file</string>
     <string name="night_mode">Night mode</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
+    <string name="version">Version</string>
+    <string name="contact_me">Contact me</string>
+    <string name="contact_me_summary">Tap here to send me email</string>
+    <string name="about">About</string>
+    <string name="general">General</string>
+    <string name="backup_and_synchronization">Backup and synchronization</string>
+    <string name="additional_notification">Additional notification</string>
+
+    <string name="entry_never">Never</string>
+    <string name="entry_1_day">1 day before</string>
+    <string name="entry_2_days">2 days before</string>
+    <string name="entry_3_days">3 days before</string>
+    <string name="entry_1_week">1 week before</string>
+
+    <string-array name="additional_notification_entries">
+        <item>@string/entry_never</item>
+        <item>@string/entry_1_day</item>
+        <item>@string/entry_2_days</item>
+        <item>@string/entry_3_days</item>
+        <item>@string/entry_1_week</item>
+    </string-array>
+
+    <string-array name="additional_notification_alias">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>7</item>
+    </string-array>
 
 
     <!--Notifications-->
-    <string name="channel_name">Reminder</string>
+    <string name="channel_name" translatable="false">Reminder</string>
     <string name="today_is">Today is\u0020</string>
 
     <!--Menu-->
@@ -122,9 +157,16 @@
     <string name="zodiac_taurus">Taurus</string>
     <string name="zodiac_virgo">Virgo</string>
 
+    <!-- backup-->
+    <string name="exporting_message">Exporting records</string>
+    <string name="storage_unavailable">Storage unavailable</string>
+    <string name="backup_finished">Backup successfully finished! XML-file is located at %1$s</string>
+    <string name="records_recovered">Records recovered!</string>
+    <string name="failed_to_recover">Failed to recover records</string>
 
-    <string name="key_fb_import">fb_import</string>
-    <string name="fb_import">Import contacts from Facebook</string>
-    <string name="facebook_app_id">373222226552473</string>
+    <!--Permissions-->
+    <string name="read_contacts_permission_not_granted">Permission to read contacts was not granted</string>
+    <string name="read_sdcard_permission_not_granted">Permission to read SD card was not granted</string>
+    <string name="write_sdcard_permission_not_granted">Permission to write SD card was not granted</string>
 
 </resources>

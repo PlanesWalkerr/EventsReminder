@@ -91,5 +91,28 @@
 
     <!--Notifications-->
     <string name="today_is">Сегодня исполняется\u0020</string>
+    <string name="import_contacts_summary">Импортировать контакты с вашего устройства</string>
+    <string name="export_data_summary">Сохранить XML файл с резервной копией данных</string>
+    <string name="import_data_summary">Восстановить данные из XML файла</string>
+    <string name="version">Версия</string>
+    <string name="contact_me">Связаться со мной</string>
+    <string name="contact_me_summary">Нажмите здесь, чтобы отправить мне email</string>
+    <string name="about">О приложении</string>
+    <string name="general">Общие</string>
+    <string name="additional_notification">Дополнительное уведомление</string>
+    <string name="entry_never">Никогда</string>
+    <string name="entry_1_day">За  1 день</string>
+    <string name="entry_2_days">За 2 дня</string>
+    <string name="entry_3_days">За 3 дня</string>
+    <string name="entry_1_week">За неделю</string>
+    <string name="exporting_message">Выполняется резервное копирование</string>
+    <string name="storage_unavailable">Хранилище недоступно</string>
+    <string name="backup_finished">Резервное копирование успешно завершено. XML файл расположен в %1$s</string>
+    <string name="records_recovered">Записи успешно восстановлены</string>
+    <string name="failed_to_recover">Не удалось восстановить записи</string>
+    <string name="read_contacts_permission_not_granted">Разрешение читать контакты не было предоставлено</string>
+    <string name="read_sdcard_permission_not_granted">Разрешение на чтение с SD карты не было предоставлено</string>
+    <string name="write_sdcard_permission_not_granted">Разрешение на запись на SD карту не было предоставлено</string>
+    <string name="backup_and_synchronization">Резервное копирование и синхронизация</string>
 
 </resources>
